@@ -1,11 +1,27 @@
 import React, { useState } from 'react'
 import DateCreated from './utils/DateCreated'
-const TodoForm = () => {
+import PropTypes from 'prop-types'
+
+
+
+
+const TodoForm = (props) => {
   const [description, setDescription] = useState("")
   const [date, setDate] = useState(null)
   const [completed, setCompleted] = useState(false)
+
+const handleSubmit = event => {
+    event.preventDefault()
+    props.submitTodo(description, date, completed);
+
+    setDescription("");
+    setDate(null);
+    setCompleted(false);
+}
+
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
         <div className="form-group">
             <label >
                 Description:&nbsp;
@@ -29,6 +45,9 @@ const TodoForm = () => {
         </div>
     </form>
   )
+}
+TodoForm.propTypes = {
+    submitTodo: PropTypes.func.isRequired
 }
 export default TodoForm;
 
